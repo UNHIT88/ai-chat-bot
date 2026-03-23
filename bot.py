@@ -27,7 +27,7 @@ API_KEY = os.getenv("GEMINI_API_KEY")
 # Configure Gemini
 genai.configure(api_key=API_KEY)
 # မှတ်ချက်: gemini-2.5-flash မထွက်သေးပါက gemini-1.5-flash ဟု ပြောင်းသုံးနိုင်သည်
-model = genai.GenerativeModel('gemini-1.5-flash')
+model = genai.GenerativeModel('gemini-2.5-flash')
 
 def generate_content(full_prompt: str) -> str:
     try:
