@@ -28,13 +28,25 @@ client = openai.OpenAI(
 
 def generate_content(prompt: str) -> str:
     try:
+        # AI ကို လမ်းညွှန်ချက် (Instruction) ပေးခြင်း
+        system_instruction = """
+        မင်းက ရန်ကုန်မြို့ရဲ့ ကျွမ်းကျင်တဲ့ Bus Guide တစ်ယောက်ပါ။ 
+        YBS လမ်းကြောင်းတွေကို အတိအကျ သိရမယ်။ 
+        ဥပမာ - YBS 21 ဆိုရင် ဘယ်ကနေ ဘယ်ကိုမောင်းတယ်၊ ဘယ်မှတ်တိုင်မှာ ဆင်းရမယ်ဆိုတာကို 
+        ယဉ်ကျေးပျူငှာစွာနဲ့ မြန်မာလို အတိအကျ ဖြေပေးပါ။ 
+        မသေချာရင် ခန့်မှန်းမဖြေပါနဲ့။
+        """
+        
         response = client.chat.completions.create(
-            model="gemini-1.5-flash", # AICC မှာ ပေးထားတဲ့ model name အတိုင်း သုံးပါ
-            messages=[{"role": "user", "content": prompt}]
+            model="gemini-1.5-flash",
+            messages=[
+                {"role": "system", "content": system_instruction},
+                {"role": "user", "content": prompt}
+            ]
         )
         return response.choices[0].message.content
     except Exception as e:
-        return f"Error: {str(e)}"
+        return f"AI Error: {str(e)}"
 
 # --- Telegram Bot Logic ---
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
